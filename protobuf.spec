@@ -1,7 +1,7 @@
 # Build -python subpackage
 %bcond_without python
 # Build -java subpackage
-%bcond_without java
+%bcond_with java
 
 %global emacs_version %(pkg-config emacs --modversion)
 %global emacs_lispdir %(pkg-config emacs --variable sitepkglispdir)
@@ -10,7 +10,7 @@
 Summary:        Protocol Buffers - Google's data interchange format
 Name:           protobuf
 Version:        3.5.0
-Release:        8%{?dist}
+Release:        11
 License:        BSD
 URL:            https://github.com/protocolbuffers/protobuf
 Source:         https://github.com/protocolbuffers/protobuf/archive/v%{version}.tar.gz
@@ -80,7 +80,7 @@ lacks descriptors, reflection, and some other features.
 %package -n python2-%{name}
 Summary:        Python 2 bindings for Google Protocol Buffers
 BuildArch:      noarch
-BuildRequires:  python2-devel python2-setuptools python2-google-apputils
+BuildRequires:  python2-devel python2-setuptools
 Requires:       python2-six
 Conflicts:      %{name}-compiler > %{version}
 Conflicts:      %{name}-compiler < %{version}
@@ -95,7 +95,6 @@ Summary:        Python 3 bindings for Google Protocol Buffers
 BuildArch:      noarch
 BuildRequires:  python%{python3_pkgversion}-devel
 BuildRequires:  python%{python3_pkgversion}-setuptools
-BuildRequires:  python%{python3_pkgversion}-google-apputils
 Requires:       python%{python3_pkgversion}-six >= 1.9
 Conflicts:      %{name}-compiler > %{version}
 Conflicts:      %{name}-compiler < %{version}
@@ -320,3 +319,17 @@ install -p -m 0644 %{SOURCE2} $RPM_BUILD_ROOT%{emacs_startdir}
 %endif
 
 %changelog
+* Tue Oct 29 2019 chengquan <chengquan3@openeuler.org> - 3.5.0-11
+- Type:bugfix
+- ID:NA
+- SUG:NA
+- DESC:remove useless requires of google-apputils
+
+* Thu Oct 17 2019 openEuler Buildteam <buildteam@openeuler.org> - 3.5.0-10
+- Type:bugfix
+- ID:NA
+- SUG:NA
+- DESC:add bcondwith java
+
+* Thu Oct 17 2019 openEuler Buildteam <buildteam@openeuler.org> - 1.35-1
+- Package init
