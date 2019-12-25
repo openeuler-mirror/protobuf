@@ -78,8 +78,6 @@ BuildArch:      noarch
 BuildRequires:  python2-devel python2-setuptools
 BuildRequires:  python2-google-apputils
 Requires:       python2-six
-Conflicts:      %{name}-compiler > %{version}
-Conflicts:      %{name}-compiler < %{version}
 Obsoletes:      %{name}-python < 3.1.0-4
 Provides:       %{name}-python = %{version}-%{release}
 %{?python_provide:%python_provide python2-%{name}}
@@ -96,8 +94,6 @@ BuildRequires:  python%{python3_pkgversion}-setuptools
 # For tests
 BuildRequires:  python%{python3_pkgversion}-google-apputils
 Requires:       python%{python3_pkgversion}-six >= 1.9
-Conflicts:      %{name}-compiler > %{version}
-Conflicts:      %{name}-compiler < %{version}
 Provides:       %{name}-python3 = %{version}-%{release}
 %{?python_provide:%python_provide python%{python3_pkgversion}-%{name}}
 
@@ -120,8 +116,6 @@ BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.easymock:easymock)
-Conflicts:      %{name}-compiler > %{version}
-Conflicts:      %{name}-compiler < %{version}
 Obsoletes:      %{name}-javanano < 3.6.0
 
 %description java
