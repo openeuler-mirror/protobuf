@@ -1,0 +1,12 @@
+diff --git a/src/Makefile.am b/src/Makefile.am
+index f869d56..c8170f2 100644
+--- a/src/Makefile.am
++++ b/src/Makefile.am
+@@ -19,6 +19,7 @@ PTHREAD_DEF =
+ endif
+ 
+ PROTOBUF_VERSION = 20:0:0
++PROTOBUF_OPT_FLAG += -Wl,-z,now
+ 
+ if GCC
+ # Turn on all warnings except for sign comparison (we ignore sign comparison
