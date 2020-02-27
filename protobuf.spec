@@ -307,13 +307,13 @@ install -p -m 0644 %{SOURCE2} %{buildroot}%{_emacs_sitestartdir}
 %endif
 
 %changelog
-* Tue Dec 12 2019 openEuler Buildteam <buildteam@openeuler.org> - 3.9.0-8.h3
+* Thu Dec 12 2019 openEuler Buildteam <buildteam@openeuler.org> - 3.9.0-8.h3
 - Type:bugfix
 - ID:NA
 - SUG:NA
 - DESC:add bind now secure compile option
 
-* Tue Nov 27 2019 openEuler Buildteam <buildteam@openeuler.org> - 3.9.0-8.h2
+* Wed Nov 27 2019 openEuler Buildteam <buildteam@openeuler.org> - 3.9.0-8.h2
 - Type:enhancement
 - ID:NA
 - SUG:NA
