@@ -9,7 +9,7 @@
 Summary:        Protocol Buffers - Google's data interchange format
 Name:           protobuf
 Version:        3.9.0
-Release:        6
+Release:        7
 License:        BSD
 URL:            https://github.com/protocolbuffers/protobuf
 Source:         https://github.com/protocolbuffers/protobuf/releases/download/v%{version}%{?rcver}/%{name}-all-%{version}%{?rcver}.tar.gz
@@ -23,9 +23,9 @@ Requires:       emacs-filesystem >= %{_emacs_version} vim-enhanced
 Provides:       %{name}-vim
 Provides:       %{name}-emacs
 Provides:       %{name}-emacs-el
-Obsoletes:      %{name}-vim
-Obsoletes:      %{name}-emacs
-Obsoletes:      %{name}-emacs-el
+Obsoletes:      %{name}-vim < 3.9.0
+Obsoletes:      %{name}-emacs < 3.9.0
+Obsoletes:      %{name}-emacs-el < 3.9.0
 
 %description
 
@@ -39,8 +39,8 @@ Requires:       %{name} = %{version}-%{release}
 Requires:       zlib-devel pkgconfig
 Provides:       %{name}-compiler
 Provides:       %{name}-static
-Obsoletes:      %{name}-compiler
-Obsoletes:      %{name}-static
+Obsoletes:      %{name}-compiler < 3.9.0
+Obsoletes:      %{name}-static < 3.9.0
 
 %description devel
 This package contains Protocol Buffers compiler for all languages and
@@ -61,7 +61,7 @@ Summary:        Protocol Buffers LITE_RUNTIME development libraries
 Requires:       %{name}-devel = %{version}-%{release}
 Requires:       %{name}-lite = %{version}-%{release}
 Provides:       %{name}-lite-static
-Obsoletes:      %{name}-lite-static
+Obsoletes:      %{name}-lite-static < 3.9.0
 
 %description lite-devel
 This package contains development libraries built with
