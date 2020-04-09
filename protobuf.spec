@@ -9,12 +9,11 @@
 Summary:        Protocol Buffers - Google's data interchange format
 Name:           protobuf
 Version:        3.9.0
-Release:        7
+Release:        9
 License:        BSD
 URL:            https://github.com/protocolbuffers/protobuf
 Source:         https://github.com/protocolbuffers/protobuf/releases/download/v%{version}%{?rcver}/%{name}-all-%{version}%{?rcver}.tar.gz
-Source1:        ftdetect-proto.vim
-Source2:        protobuf-init.el
+Source1:        protobuf-init.el
 
 Patch9000:      0001-add-secure-compile-option-in-Makefile.patch
 
@@ -223,8 +222,6 @@ find %{buildroot}%{python2_sitelib} %{buildroot}%{python3_sitelib} -name \*.py |
   xargs sed -i -e '1{\@^#!@d}'
 popd
 %endif
-install -p -m 644 -D %{SOURCE1} %{buildroot}%{_datadir}/vim/vimfiles/ftdetect/proto.vim
-install -p -m 644 -D editors/proto.vim %{buildroot}%{_datadir}/vim/vimfiles/syntax/proto.vim
 
 %if %{with java}
 %mvn_install
@@ -234,7 +231,7 @@ mkdir -p %{buildroot}%{_emacs_sitelispdir}/%{name}
 install -p -m 0644 editors/protobuf-mode.el %{buildroot}%{_emacs_sitelispdir}/%{name}
 install -p -m 0644 editors/protobuf-mode.elc %{buildroot}%{_emacs_sitelispdir}/%{name}
 mkdir -p %{buildroot}%{_emacs_sitestartdir}
-install -p -m 0644 %{SOURCE2} %{buildroot}%{_emacs_sitestartdir}
+install -p -m 0644 %{SOURCE1} %{buildroot}%{_emacs_sitestartdir}
 
 %ldconfig_scriptlets
 %ldconfig_scriptlets lite
@@ -250,8 +247,6 @@ install -p -m 0644 %{SOURCE2} %{buildroot}%{_emacs_sitestartdir}
 %{_libdir}/libprotoc.so.20*
 %{_emacs_sitelispdir}/%{name}/
 %{_emacs_sitestartdir}/protobuf-init.el
-%{_datadir}/vim/vimfiles/ftdetect/proto.vim
-%{_datadir}/vim/vimfiles/syntax/proto.vim
 
 %files devel
 %dir %{_includedir}/google
@@ -307,6 +302,12 @@ install -p -m 0644 %{SOURCE2} %{buildroot}%{_emacs_sitestartdir}
 %endif
 
 %changelog
+* Web Apr 08 2020 openEuler Buildteam <buildteam@openeuler.org> - 3.9.0-9
+- Type:enhancement
+- ID:NA
+- SUG:NA
+- DESC: remove unnecessary files
+
 * Thu Dec 12 2019 openEuler Buildteam <buildteam@openeuler.org> - 3.9.0-8.h3
 - Type:bugfix
 - ID:NA
