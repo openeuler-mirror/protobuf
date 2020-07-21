@@ -8,7 +8,7 @@
 Summary:        Protocol Buffers - Google's data interchange format
 Name:           protobuf
 Version:        3.12.3
-Release:        10
+Release:        11
 License:        BSD
 URL:            https://github.com/protocolbuffers/protobuf
 Source:         https://github.com/protocolbuffers/protobuf/releases/download/v%{version}%{?rcver}/%{name}-all-%{version}%{?rcver}.tar.gz
@@ -268,6 +268,12 @@ install -p -m 0644 %{SOURCE1} %{buildroot}%{_emacs_sitestartdir}
 %endif
 
 %changelog
+* Thu Jul 23 2020 openEuler Buildteam <buildteam@openeuler.org> - 3.12.3-11
+- Type:enhancement
+- ID:NA
+- SUG:NA
+- DESC: drop python2-protobuf and refactor .spec file
+
 * Thu Jul 16 2020 openEuler Buildteam <buildteam@openeuler.org> - 3.12.3-10
 - Type:bugfix
 - ID:NA
