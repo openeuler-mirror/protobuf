@@ -8,8 +8,8 @@
 
 Summary:        Protocol Buffers - Google's data interchange format
 Name:           protobuf
-Version:        3.9.0
-Release:        9
+Version:        3.12.3
+Release:        10
 License:        BSD
 URL:            https://github.com/protocolbuffers/protobuf
 Source:         https://github.com/protocolbuffers/protobuf/releases/download/v%{version}%{?rcver}/%{name}-all-%{version}%{?rcver}.tar.gz
@@ -22,9 +22,9 @@ Requires:       emacs-filesystem >= %{_emacs_version} vim-enhanced
 Provides:       %{name}-vim
 Provides:       %{name}-emacs
 Provides:       %{name}-emacs-el
-Obsoletes:      %{name}-vim < 3.9.0
-Obsoletes:      %{name}-emacs < 3.9.0
-Obsoletes:      %{name}-emacs-el < 3.9.0
+Obsoletes:      %{name}-vim < 3.12.3
+Obsoletes:      %{name}-emacs < 3.12.3
+Obsoletes:      %{name}-emacs-el < 3.12.3
 
 %description
 
@@ -38,8 +38,8 @@ Requires:       %{name} = %{version}-%{release}
 Requires:       zlib-devel pkgconfig
 Provides:       %{name}-compiler
 Provides:       %{name}-static
-Obsoletes:      %{name}-compiler < 3.9.0
-Obsoletes:      %{name}-static < 3.9.0
+Obsoletes:      %{name}-compiler < 3.12.3
+Obsoletes:      %{name}-static < 3.12.3
 
 %description devel
 This package contains Protocol Buffers compiler for all languages and
@@ -60,7 +60,7 @@ Summary:        Protocol Buffers LITE_RUNTIME development libraries
 Requires:       %{name}-devel = %{version}-%{release}
 Requires:       %{name}-lite = %{version}-%{release}
 Provides:       %{name}-lite-static
-Obsoletes:      %{name}-lite-static < 3.9.0
+Obsoletes:      %{name}-lite-static < 3.12.3
 
 %description lite-devel
 This package contains development libraries built with
@@ -240,11 +240,11 @@ install -p -m 0644 %{SOURCE1} %{buildroot}%{_emacs_sitestartdir}
 %files
 %doc CHANGES.txt CONTRIBUTORS.txt README.md
 %license LICENSE
-%{_libdir}/libprotobuf.so.20*
+%{_libdir}/libprotobuf.so.23*
 %doc README.md
 %license LICENSE
 %{_bindir}/protoc
-%{_libdir}/libprotoc.so.20*
+%{_libdir}/libprotoc.so.23*
 %{_emacs_sitelispdir}/%{name}/
 %{_emacs_sitestartdir}/protobuf-init.el
 
@@ -259,7 +259,7 @@ install -p -m 0644 %{SOURCE1} %{buildroot}%{_emacs_sitestartdir}
 %{_libdir}/libprotoc.a
 
 %files lite
-%{_libdir}/libprotobuf-lite.so.20*
+%{_libdir}/libprotobuf-lite.so.23*
 
 %files lite-devel
 %{_libdir}/libprotobuf-lite.so
@@ -302,7 +302,13 @@ install -p -m 0644 %{SOURCE1} %{buildroot}%{_emacs_sitestartdir}
 %endif
 
 %changelog
-* Web Apr 08 2020 openEuler Buildteam <buildteam@openeuler.org> - 3.9.0-9
+* Thu Jul 16 2020 openEuler Buildteam <buildteam@openeuler.org> - 3.12.3-10
+- Type:bugfix
+- ID:NA
+- SUG:NA
+- DESC:upgrade from 3.9.0 to 3.12.3
+
+* Wed Apr 08 2020 openEuler Buildteam <buildteam@openeuler.org> - 3.9.0-9
 - Type:enhancement
 - ID:NA
 - SUG:NA
