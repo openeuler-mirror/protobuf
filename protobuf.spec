@@ -2,7 +2,6 @@
 %bcond_without python
 # Build -java subpackage
 %bcond_with java
-%bcond_without python3
 
 #global rcver rc2
 
@@ -18,13 +17,6 @@ Source1:        protobuf-init.el
 Patch9000:      0001-add-secure-compile-option-in-Makefile.patch
 
 BuildRequires:  autoconf automake emacs gcc-c++ libtool pkgconfig zlib-devel
-Requires:       emacs-filesystem >= %{_emacs_version} vim-enhanced
-Provides:       %{name}-vim
-Provides:       %{name}-emacs
-Provides:       %{name}-emacs-el
-Obsoletes:      %{name}-vim < 3.12.3
-Obsoletes:      %{name}-emacs < 3.12.3
-Obsoletes:      %{name}-emacs-el < 3.12.3
 
 %description
 
@@ -36,10 +28,15 @@ You can find protobuf's documentation on the Google Developers site.
 Summary:        Protocol Buffers C++ headers and libraries
 Requires:       %{name} = %{version}-%{release}
 Requires:       zlib-devel pkgconfig
+Requires:       emacs-filesystem >= %{_emacs_version} vim-enhanced
 Provides:       %{name}-compiler
 Provides:       %{name}-static
+Provides:       %{name}-vim
 Obsoletes:      %{name}-compiler < 3.12.3
 Obsoletes:      %{name}-static < 3.12.3
+Obsoletes:      protobuf-emacs < 3.12.3
+Obsoletes:      protobuf-emacs-el < 3.12.3
+
 
 %description devel
 This package contains Protocol Buffers compiler for all languages and
@@ -71,34 +68,19 @@ which only depends libprotobuf-lite, which is much smaller than libprotobuf but
 lacks descriptors, reflection, and some other features.
 
 %if %{with python}
-%package -n python2-%{name}
-Summary:        Python 2 bindings for Google Protocol Buffers
-BuildArch:      noarch
-BuildRequires:  python2-devel python2-setuptools
-BuildRequires:  python2-google-apputils
-Requires:       python2-six
-Obsoletes:      %{name}-python < 3.1.0-4
-Provides:       %{name}-python = %{version}-%{release}
-%{?python_provide:%python_provide python2-%{name}}
-
-%description -n python2-%{name}
-This package contains Python 2 libraries for Google Protocol Buffers
-
-%if %{with python3}
 %package -n python%{python3_pkgversion}-%{name}
 Summary:        Python 3 bindings for Google Protocol Buffers
 BuildArch:      noarch
 BuildRequires:  python%{python3_pkgversion}-devel
 BuildRequires:  python%{python3_pkgversion}-setuptools
-# For tests
-BuildRequires:  python%{python3_pkgversion}-google-apputils
 Requires:       python%{python3_pkgversion}-six >= 1.9
+Conflicts:      %{name}-compiler > %{version}
+Conflicts:      %{name}-compiler < %{version}
 Provides:       %{name}-python3 = %{version}-%{release}
 %{?python_provide:%python_provide python%{python3_pkgversion}-%{name}}
 
 %description -n python%{python3_pkgversion}-%{name}
 This package contains Python 3 libraries for Google Protocol Buffers
-%endif
 %endif
 
 
@@ -177,16 +159,12 @@ iconv -f iso8859-1 -t utf-8 CONTRIBUTORS.txt > CONTRIBUTORS.txt.utf8
 mv CONTRIBUTORS.txt.utf8 CONTRIBUTORS.txt
 export PTHREAD_LIBS="-lpthread"
 ./autogen.sh
-%configure
-
-%make_build
+%configure	
+%make_build CXXFLAGS="%{build_cxxflags} -Wno-error=type-limits"
 
 %if %{with python}
 pushd python
-%py2_build
-%if %{with python3}
 %py3_build
-%endif
 popd
 %endif
 
@@ -204,7 +182,7 @@ fail=0
 %else
 fail=1
 %endif
-make %{?_smp_mflags} check || exit $fail
+%make_build check CXXFLAGS="%{build_cxxflags} -Wno-error=type-limits" || exit $fail
 
 
 %install
@@ -214,14 +192,12 @@ find %{buildroot} -type f -name "*.la" -exec rm -f {} \;
 %if %{with python}
 pushd python
 #python ./setup.py install --root=%{buildroot} --single-version-externally-managed --record=INSTALLED_FILES --optimize=1
-%py2_install
-%if %{with python3}
 %py3_install
-%endif
-find %{buildroot}%{python2_sitelib} %{buildroot}%{python3_sitelib} -name \*.py |
+find %{buildroot}%{python3_sitelib} -name \*.py |
   xargs sed -i -e '1{\@^#!@d}'
 popd
 %endif
+install -p -m 644 -D editors/proto.vim %{buildroot}%{_datadir}/vim/vimfiles/syntax/proto.vim
 
 %if %{with java}
 %mvn_install
@@ -235,18 +211,11 @@ install -p -m 0644 %{SOURCE1} %{buildroot}%{_emacs_sitestartdir}
 
 %ldconfig_scriptlets
 %ldconfig_scriptlets lite
-%ldconfig_scriptlets compiler
 
 %files
 %doc CHANGES.txt CONTRIBUTORS.txt README.md
 %license LICENSE
 %{_libdir}/libprotobuf.so.23*
-%doc README.md
-%license LICENSE
-%{_bindir}/protoc
-%{_libdir}/libprotoc.so.23*
-%{_emacs_sitelispdir}/%{name}/
-%{_emacs_sitestartdir}/protobuf-init.el
 
 %files devel
 %dir %{_includedir}/google
@@ -257,7 +226,14 @@ install -p -m 0644 %{SOURCE1} %{buildroot}%{_emacs_sitestartdir}
 %doc examples/add_person.cc examples/addressbook.proto examples/list_people.cc examples/Makefile examples/README.md
 %{_libdir}/libprotobuf.a
 %{_libdir}/libprotoc.a
-
+%doc README.md
+%license LICENSE
+%{_bindir}/protoc
+%{_libdir}/libprotoc.so.23*
+%{_emacs_sitelispdir}/%{name}/
+%{_emacs_sitestartdir}/protobuf-init.el
+%{_datadir}/vim/vimfiles/syntax/proto.vim
+ 
 %files lite
 %{_libdir}/libprotobuf-lite.so.23*
 
@@ -267,15 +243,6 @@ install -p -m 0644 %{SOURCE1} %{buildroot}%{_emacs_sitestartdir}
 %{_libdir}/libprotobuf-lite.a
 
 %if %{with python}
-%files -n python2-protobuf
-%dir %{python2_sitelib}/google
-%{python2_sitelib}/google/protobuf/
-%{python2_sitelib}/protobuf-%{version}%{?rcver}-py2.?.egg-info/
-%{python2_sitelib}/protobuf-%{version}%{?rcver}-py2.?-nspkg.pth
-%doc python/README.md
-%doc examples/add_person.py examples/list_people.py examples/addressbook.proto
-
-%if %{with python3}
 %files -n python%{python3_pkgversion}-protobuf
 %dir %{python3_sitelib}/google
 %{python3_sitelib}/google/protobuf/
@@ -283,7 +250,6 @@ install -p -m 0644 %{SOURCE1} %{buildroot}%{_emacs_sitestartdir}
 %{python3_sitelib}/protobuf-%{version}%{?rcver}-py3.?-nspkg.pth
 %doc python/README.md
 %doc examples/add_person.py examples/list_people.py examples/addressbook.proto
-%endif
 %endif
 
 %if %{with java}
