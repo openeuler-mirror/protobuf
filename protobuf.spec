@@ -8,7 +8,7 @@
 Summary:        Protocol Buffers - Google's data interchange format
 Name:           protobuf
 Version:        3.12.3
-Release:        11
+Release:        12
 License:        BSD
 URL:            https://github.com/protocolbuffers/protobuf
 Source:         https://github.com/protocolbuffers/protobuf/releases/download/v%{version}%{?rcver}/%{name}-all-%{version}%{?rcver}.tar.gz
@@ -74,8 +74,8 @@ BuildArch:      noarch
 BuildRequires:  python%{python3_pkgversion}-devel
 BuildRequires:  python%{python3_pkgversion}-setuptools
 Requires:       python%{python3_pkgversion}-six >= 1.9
-Conflicts:      %{name}-compiler > %{version}
-Conflicts:      %{name}-compiler < %{version}
+Conflicts:      %{name}-compiler > %{version}-%{release}
+Conflicts:      %{name}-compiler < %{version}-%{release}
 Provides:       %{name}-python3 = %{version}-%{release}
 %{?python_provide:%python_provide python%{python3_pkgversion}-%{name}}
 
@@ -268,6 +268,12 @@ install -p -m 0644 %{SOURCE1} %{buildroot}%{_emacs_sitestartdir}
 %endif
 
 %changelog
+* Fri Aug 28 2020 openEuler Buildteam <buildteam@openeuler.org> - 3.12.3-12
+- Type:bugfix
+- ID:NA
+- SUG:NA
+- DESC: invalid version of Conflicts
+
 * Thu Jul 23 2020 openEuler Buildteam <buildteam@openeuler.org> - 3.12.3-11
 - Type:enhancement
 - ID:NA
