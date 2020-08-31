@@ -8,7 +8,7 @@
 Summary:        Protocol Buffers - Google's data interchange format
 Name:           protobuf
 Version:        3.12.3
-Release:        12
+Release:        13
 License:        BSD
 URL:            https://github.com/protocolbuffers/protobuf
 Source:         https://github.com/protocolbuffers/protobuf/releases/download/v%{version}%{?rcver}/%{name}-all-%{version}%{?rcver}.tar.gz
@@ -29,7 +29,7 @@ Summary:        Protocol Buffers C++ headers and libraries
 Requires:       %{name} = %{version}-%{release}
 Requires:       zlib-devel pkgconfig
 Requires:       emacs-filesystem >= %{_emacs_version} vim-enhanced
-Provides:       %{name}-compiler
+Provides:       %{name}-compiler = %{version}-%{release}
 Provides:       %{name}-static
 Provides:       %{name}-vim
 Obsoletes:      %{name}-compiler < 3.12.3
@@ -268,6 +268,12 @@ install -p -m 0644 %{SOURCE1} %{buildroot}%{_emacs_sitestartdir}
 %endif
 
 %changelog
+* Sat Aug 29 2020 openEuler Buildteam <buildteam@openeuler.org> - 3.12.3-13
+- Type:bugfix
+- ID:NA
+- SUG:NA
+- DESC: remove Conflicts
+
 * Fri Aug 28 2020 openEuler Buildteam <buildteam@openeuler.org> - 3.12.3-12
 - Type:bugfix
 - ID:NA
