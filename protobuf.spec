@@ -146,8 +146,6 @@ Protocol Buffer BOM POM.
 find -name \*.cc -o -name \*.h | xargs chmod -x
 chmod 644 examples/*
 %if %{with java}
-#%pom_remove_dep com.google.truth:truth java/pom.xml
-#%pom_remove_dep org.easymock:easymockclassextension java/pom.xml java/*/pom.xml
 %pom_remove_dep org.easymock:easymockclassextension java/pom.xml java/core/pom.xml java/lite/pom.xml java/util/pom.xml
 %pom_remove_dep com.google.truth:truth java/pom.xml java/util/pom.xml java/lite/pom.xml java/core/pom.xml
 %pom_remove_dep com.google.errorprone:error_prone_annotations java/util/pom.xml
