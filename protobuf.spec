@@ -1,14 +1,14 @@
 # Build -python subpackage
 %bcond_without python
 # Build -java subpackage
-%bcond_with java
+%bcond_without java
 
 #global rcver rc2
 
 Summary:        Protocol Buffers - Google's data interchange format
 Name:           protobuf
 Version:        3.12.3
-Release:        13
+Release:        14
 License:        BSD
 URL:            https://github.com/protocolbuffers/protobuf
 Source:         https://github.com/protocolbuffers/protobuf/releases/download/v%{version}%{?rcver}/%{name}-all-%{version}%{?rcver}.tar.gz
@@ -102,6 +102,13 @@ Obsoletes:      %{name}-javanano < 3.6.0
 %description java
 This package contains Java Protocol Buffers runtime library.
 
+%package javalite
+Summary:        Java Protocol Buffers lite runtime library
+BuildArch:      noarch
+
+%description javalite
+This package contains Java Protocol Buffers lite runtime library.
+
 %package java-util
 Summary:        Utilities for Protocol Buffers
 BuildArch:      noarch
@@ -124,6 +131,13 @@ BuildArch:      noarch
 %description parent
 Protocol Buffer Parent POM.
 
+%package bom
+Summary:        Protocol Buffer BOM POM
+BuildArch:      noarch
+
+%description bom
+Protocol Buffer BOM POM.
+
 %endif
 
 %prep
@@ -132,11 +146,25 @@ Protocol Buffer Parent POM.
 find -name \*.cc -o -name \*.h | xargs chmod -x
 chmod 644 examples/*
 %if %{with java}
-%pom_remove_parent java/pom.xml
-%pom_remove_dep org.easymock:easymockclassextension java/pom.xml java/*/pom.xml
+#%pom_remove_dep com.google.truth:truth java/pom.xml
+#%pom_remove_dep org.easymock:easymockclassextension java/pom.xml java/*/pom.xml
+%pom_remove_dep org.easymock:easymockclassextension java/pom.xml java/core/pom.xml java/lite/pom.xml java/util/pom.xml
+%pom_remove_dep com.google.truth:truth java/pom.xml java/util/pom.xml java/lite/pom.xml java/core/pom.xml
+%pom_remove_dep com.google.errorprone:error_prone_annotations java/util/pom.xml
+%pom_remove_dep com.google.guava:guava-testlib java/pom.xml java/util/pom.xml
+
 # These use easymockclassextension
 rm java/core/src/test/java/com/google/protobuf/ServiceTest.java
+
 #rm -r java/core/src/test
+
+# These use truth or error_prone_annotations or guava-testlib
+rm java/core/src/test/java/com/google/protobuf/LiteralByteStringTest.java
+rm java/core/src/test/java/com/google/protobuf/BoundedByteStringTest.java
+rm java/core/src/test/java/com/google/protobuf/RopeByteStringTest.java
+rm java/core/src/test/java/com/google/protobuf/RopeByteStringSubstringTest.java
+rm -r java/util/src/test/java/com/google/protobuf/util
+rm -r java/util/src/main/java/com/google/protobuf/util
 
 # Make OSGi dependency on sun.misc package optional
 %pom_xpath_inject "pom:configuration/pom:instructions" "<Import-Package>sun.misc;resolution:=optional,*</Import-Package>" java/core
@@ -149,6 +177,8 @@ rm java/core/src/test/java/com/google/protobuf/ServiceTest.java
 %ifarch %{arm}
 mv java/core/src/test/java/com/google/protobuf/IsValidUtf8Test.java \
    java/core/src/test/java/com/google/protobuf/IsValidUtf8Test.java.slow
+mv java/core/src/test/java/com/google/protobuf/DecodeUtf8Test.java \
+  java/core/src/test/java/com/google/protobuf/DecodeUtf8Test.java.slow
 %endif
 %endif
 
@@ -265,9 +295,21 @@ install -p -m 0644 %{SOURCE1} %{buildroot}%{_emacs_sitestartdir}
 
 %files parent -f .mfiles-protobuf-parent
 %license LICENSE
+
+%files bom -f .mfiles-protobuf-bom
+%license LICENSE
+
+%files javalite -f .mfiles-protobuf-javalite
+%license LICENSE
 %endif
 
 %changelog
+* Tue Sep 1 2020 wutao <wutao61@huawei.com> - 3.12.3-14
+- Type:enhancement
+- ID:NA
+- SUG:NA
+- DESC: enhance java function and fix build errors
+
 * Sat Aug 29 2020 openEuler Buildteam <buildteam@openeuler.org> - 3.12.3-13
 - Type:bugfix
 - ID:NA
