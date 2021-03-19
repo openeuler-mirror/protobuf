@@ -8,13 +8,14 @@
 Summary:        Protocol Buffers - Google's data interchange format
 Name:           protobuf
 Version:        3.12.3
-Release:        13
+Release:        15
 License:        BSD
 URL:            https://github.com/protocolbuffers/protobuf
 Source:         https://github.com/protocolbuffers/protobuf/releases/download/v%{version}%{?rcver}/%{name}-all-%{version}%{?rcver}.tar.gz
 Source1:        protobuf-init.el
 
 Patch9000:      0001-add-secure-compile-option-in-Makefile.patch
+Patch9001:      0002-add-secure-compile-fs-check-in-Makefile.patch
 
 BuildRequires:  autoconf automake emacs gcc-c++ libtool pkgconfig zlib-devel
 
@@ -268,6 +269,18 @@ install -p -m 0644 %{SOURCE1} %{buildroot}%{_emacs_sitestartdir}
 %endif
 
 %changelog
+* Sat Feb 20 2021 haozi007 <liuhao27@huawei.com> - 3.12.3-15
+- Type:enhancement
+- ID:NA
+- SUG:NA
+- DESC: add fstack check
+
+* Tue Sep 1 2020 wutao <wutao61@huawei.com> - 3.12.3-14
+- Type:enhancement
+- ID:NA
+- SUG:NA
+- DESC: enhance java function and fix build errors
+
 * Sat Aug 29 2020 openEuler Buildteam <buildteam@openeuler.org> - 3.12.3-13
 - Type:bugfix
 - ID:NA
