@@ -1,0 +1,26 @@
+From dddceb14106499f9fca17e75cdce458a205b102c Mon Sep 17 00:00:00 2001
+From: haozi007 <liuhao27@huawei.com>
+Date: Sat, 20 Feb 2021 16:52:15 +0800
+Subject: [PATCH] add secure compile fs check in Makefile
+
+Signed-off-by: haozi007 <liuhao27@huawei.com>
+---
+ src/Makefile.am | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/Makefile.am b/src/Makefile.am
+index 9b7053b..e447b05 100644
+--- a/src/Makefile.am
++++ b/src/Makefile.am
+@@ -19,7 +19,7 @@ PTHREAD_DEF =
+ endif
+ 
+ PROTOBUF_VERSION = 23:3:0
+-PROTOBUF_OPT_FLAG += -Wl,-z,now
++PROTOBUF_OPT_FLAG += -Wl,-z,now -fstack-check
+ 
+ if GCC
+ # Turn on all warnings except for sign comparison (we ignore sign comparison
+-- 
+2.25.1
+
