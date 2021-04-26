@@ -8,7 +8,7 @@
 Summary:        Protocol Buffers - Google's data interchange format
 Name:           protobuf
 Version:        3.12.3
-Release:        15
+Release:        16
 License:        BSD
 URL:            https://github.com/protocolbuffers/protobuf
 Source:         https://github.com/protocolbuffers/protobuf/releases/download/v%{version}%{?rcver}/%{name}-all-%{version}%{?rcver}.tar.gz
@@ -25,18 +25,26 @@ Protocol Buffers (a.k.a., protobuf) are Google's language-neutral,
 platform-neutral, extensible mechanism for serializing structured data.
 You can find protobuf's documentation on the Google Developers site.
 
+%package compiler
+Summary:	Protocol Buffers compiler
+Requires:       %{name} = %{version}-%{release}
+Obsoletes:      protobuf-emacs < 3.12.3
+Obsoletes:      protobuf-emacs-el < 3.12.3
+Requires:       emacs-filesystem >= %{_emacs_version}
+
+%description compiler
+This package containers Protocol Buffers compiler for all programming languages.
+
+
 %package devel
 Summary:        Protocol Buffers C++ headers and libraries
 Requires:       %{name} = %{version}-%{release}
-Requires:       zlib-devel pkgconfig
-Requires:       emacs-filesystem >= %{_emacs_version} vim-enhanced
-Provides:       %{name}-compiler = %{version}-%{release}
+Requires:       %{name}-compiler = %{version}-%{release}
+Requires:       zlib-devel pkgconfig vim-enhanced
 Provides:       %{name}-static
 Provides:       %{name}-vim
-Obsoletes:      %{name}-compiler < 3.12.3
 Obsoletes:      %{name}-static < 3.12.3
-Obsoletes:      protobuf-emacs < 3.12.3
-Obsoletes:      protobuf-emacs-el < 3.12.3
+Obsoletes:      %{name}-vim < 3.12.3
 
 
 %description devel
@@ -212,11 +220,21 @@ install -p -m 0644 %{SOURCE1} %{buildroot}%{_emacs_sitestartdir}
 
 %ldconfig_scriptlets
 %ldconfig_scriptlets lite
+%ldconfig_scriptlets compiler
 
 %files
 %doc CHANGES.txt CONTRIBUTORS.txt README.md
 %license LICENSE
 %{_libdir}/libprotobuf.so.23*
+
+%files compiler
+%{_bindir}/protoc
+%{_libdir}/libprotoc.so.23*
+%{_emacs_sitelispdir}/%{name}/
+%{_emacs_sitestartdir}/protobuf-init.el
+%license LICENSE
+%doc README.md
+
 
 %files devel
 %dir %{_includedir}/google
@@ -227,12 +245,6 @@ install -p -m 0644 %{SOURCE1} %{buildroot}%{_emacs_sitestartdir}
 %doc examples/add_person.cc examples/addressbook.proto examples/list_people.cc examples/Makefile examples/README.md
 %{_libdir}/libprotobuf.a
 %{_libdir}/libprotoc.a
-%doc README.md
-%license LICENSE
-%{_bindir}/protoc
-%{_libdir}/libprotoc.so.23*
-%{_emacs_sitelispdir}/%{name}/
-%{_emacs_sitestartdir}/protobuf-init.el
 %{_datadir}/vim/vimfiles/syntax/proto.vim
  
 %files lite
@@ -269,6 +281,12 @@ install -p -m 0644 %{SOURCE1} %{buildroot}%{_emacs_sitestartdir}
 %endif
 
 %changelog
+* Mon Apr 26 2021 haozi007 <liuhao27@huawei.com> - 3.12.3-16
+- Type:enhancement
+- ID:NA
+- SUG:NA
+- DESC: split compiler from devel
+
 * Sat Feb 20 2021 haozi007 <liuhao27@huawei.com> - 3.12.3-15
 - Type:enhancement
 - ID:NA
