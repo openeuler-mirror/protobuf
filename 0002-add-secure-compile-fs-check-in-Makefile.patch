@@ -15,7 +15,7 @@ index 9b7053b..e447b05 100644
 @@ -19,7 +19,7 @@ PTHREAD_DEF =
  endif
  
- PROTOBUF_VERSION = 23:3:0
+ PROTOBUF_VERSION = 25:0:0
 -PROTOBUF_OPT_FLAG += -Wl,-z,now
 +PROTOBUF_OPT_FLAG += -Wl,-z,now -fstack-check
  
