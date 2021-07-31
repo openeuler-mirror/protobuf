@@ -7,8 +7,8 @@
 
 Summary:        Protocol Buffers - Google's data interchange format
 Name:           protobuf
-Version:        3.12.3
-Release:        16
+Version:        3.14.0
+Release:        1
 License:        BSD
 URL:            https://github.com/protocolbuffers/protobuf
 Source:         https://github.com/protocolbuffers/protobuf/releases/download/v%{version}%{?rcver}/%{name}-all-%{version}%{?rcver}.tar.gz
@@ -16,8 +16,7 @@ Source1:        protobuf-init.el
 
 Patch9000:      0001-add-secure-compile-option-in-Makefile.patch
 Patch9001:      0002-add-secure-compile-fs-check-in-Makefile.patch
-
-BuildRequires:  autoconf automake emacs gcc-c++ libtool pkgconfig zlib-devel
+BuildRequires:  make autoconf automake emacs gcc-c++ libtool pkgconfig zlib-devel
 
 %description
 
@@ -28,8 +27,8 @@ You can find protobuf's documentation on the Google Developers site.
 %package compiler
 Summary:	Protocol Buffers compiler
 Requires:       %{name} = %{version}-%{release}
-Obsoletes:      protobuf-emacs < 3.12.3
-Obsoletes:      protobuf-emacs-el < 3.12.3
+Obsoletes:      protobuf-emacs < %{version}
+Obsoletes:      protobuf-emacs-el < %{version}
 Requires:       emacs-filesystem >= %{_emacs_version}
 
 %description compiler
@@ -43,8 +42,8 @@ Requires:       %{name}-compiler = %{version}-%{release}
 Requires:       zlib-devel pkgconfig vim-enhanced
 Provides:       %{name}-static
 Provides:       %{name}-vim
-Obsoletes:      %{name}-static < 3.12.3
-Obsoletes:      %{name}-vim < 3.12.3
+Obsoletes:      %{name}-static < %{version}
+Obsoletes:      %{name}-vim < %{version}
 
 
 %description devel
@@ -66,7 +65,7 @@ Summary:        Protocol Buffers LITE_RUNTIME development libraries
 Requires:       %{name}-devel = %{version}-%{release}
 Requires:       %{name}-lite = %{version}-%{release}
 Provides:       %{name}-lite-static
-Obsoletes:      %{name}-lite-static < 3.12.3
+Obsoletes:      %{name}-lite-static <  %{version}
 
 %description lite-devel
 This package contains development libraries built with
@@ -82,6 +81,7 @@ Summary:        Python 3 bindings for Google Protocol Buffers
 BuildArch:      noarch
 BuildRequires:  python%{python3_pkgversion}-devel
 BuildRequires:  python%{python3_pkgversion}-setuptools
+BuildRequires:  python%{python3_pkgversion}-wheel
 Requires:       python%{python3_pkgversion}-six >= 1.9
 Conflicts:      %{name}-compiler > %{version}-%{release}
 Conflicts:      %{name}-compiler < %{version}-%{release}
@@ -172,6 +172,7 @@ rm java/core/src/test/java/com/google/protobuf/LiteralByteStringTest.java
 rm java/core/src/test/java/com/google/protobuf/BoundedByteStringTest.java
 rm java/core/src/test/java/com/google/protobuf/RopeByteStringTest.java
 rm java/core/src/test/java/com/google/protobuf/RopeByteStringSubstringTest.java
+rm java/core/src/test/java/com/google/protobuf/TextFormatTest.java
 rm -r java/util/src/test/java/com/google/protobuf/util
 rm -r java/util/src/main/java/com/google/protobuf/util
 
@@ -255,11 +256,11 @@ install -p -m 0644 %{SOURCE1} %{buildroot}%{_emacs_sitestartdir}
 %files
 %doc CHANGES.txt CONTRIBUTORS.txt README.md
 %license LICENSE
-%{_libdir}/libprotobuf.so.23*
+%{_libdir}/libprotobuf.so.25*
 
 %files compiler
 %{_bindir}/protoc
-%{_libdir}/libprotoc.so.23*
+%{_libdir}/libprotoc.so.25*
 %{_emacs_sitelispdir}/%{name}/
 %{_emacs_sitestartdir}/protobuf-init.el
 %license LICENSE
@@ -278,7 +279,7 @@ install -p -m 0644 %{SOURCE1} %{buildroot}%{_emacs_sitestartdir}
 %{_datadir}/vim/vimfiles/syntax/proto.vim
  
 %files lite
-%{_libdir}/libprotobuf-lite.so.23*
+%{_libdir}/libprotobuf-lite.so.25*
 
 %files lite-devel
 %{_libdir}/libprotobuf-lite.so
@@ -317,6 +318,9 @@ install -p -m 0644 %{SOURCE1} %{buildroot}%{_emacs_sitestartdir}
 %endif
 
 %changelog
+* Fri Jul 30 2021 liyanan <liyanan32@huawei.com> - 3.14.0-1
+- update to 3.14.0
+
 * Mon Apr 26 2021 haozi007 <liuhao27@huawei.com> - 3.12.3-16
 - Type:enhancement
 - ID:NA
