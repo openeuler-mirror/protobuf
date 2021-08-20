@@ -5,7 +5,7 @@ index f1099d9..9b7053b 100644
 @@ -19,6 +19,7 @@ PTHREAD_DEF =
  endif
  
- PROTOBUF_VERSION = 23:3:0
+ PROTOBUF_VERSION = 25:0:0
 +PROTOBUF_OPT_FLAG += -Wl,-z,now
  
  if GCC
