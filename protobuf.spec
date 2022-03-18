@@ -8,7 +8,7 @@
 Summary:        Protocol Buffers - Google's data interchange format
 Name:           protobuf
 Version:        3.14.0
-Release:        2
+Release:        3
 License:        BSD
 URL:            https://github.com/protocolbuffers/protobuf
 Source:         https://github.com/protocolbuffers/protobuf/releases/download/v%{version}%{?rcver}/%{name}-all-%{version}%{?rcver}.tar.gz
@@ -16,6 +16,7 @@ Source1:        protobuf-init.el
 
 Patch9000:      0001-add-secure-compile-option-in-Makefile.patch
 Patch9001:      0002-add-secure-compile-fs-check-in-Makefile.patch
+Patch9002:      0003-fix-CVE-2021-22570.patch
 BuildRequires:  make autoconf automake emacs gcc-c++ libtool pkgconfig zlib-devel
 
 %description
@@ -318,6 +319,12 @@ install -p -m 0644 %{SOURCE1} %{buildroot}%{_emacs_sitestartdir}
 %endif
 
 %changelog
+* Fri Mar 18 2022 wangxiaochao <wangxiaochao2@huawei.com> - 3.14.0-3
+- Type:buxfix
+- ID:NA
+- SUG:NA
+- DESC: fix CVE-2021-22570
+
 * Thu Mar 10 2022 wangxiaochao <wangxiaochao2@huawei.com> - 3.14.0-2
 - Type:buxfix
 - ID:NA
