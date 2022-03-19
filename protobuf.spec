@@ -8,7 +8,7 @@
 Summary:        Protocol Buffers - Google's data interchange format
 Name:           protobuf
 Version:        3.14.0
-Release:        1
+Release:        2
 License:        BSD
 URL:            https://github.com/protocolbuffers/protobuf
 Source:         https://github.com/protocolbuffers/protobuf/releases/download/v%{version}%{?rcver}/%{name}-all-%{version}%{?rcver}.tar.gz
@@ -290,8 +290,8 @@ install -p -m 0644 %{SOURCE1} %{buildroot}%{_emacs_sitestartdir}
 %files -n python%{python3_pkgversion}-protobuf
 %dir %{python3_sitelib}/google
 %{python3_sitelib}/google/protobuf/
-%{python3_sitelib}/protobuf-%{version}%{?rcver}-py3.?.egg-info/
-%{python3_sitelib}/protobuf-%{version}%{?rcver}-py3.?-nspkg.pth
+%{python3_sitelib}/protobuf-%{version}%{?rcver}-py3.*.egg-info/
+%{python3_sitelib}/protobuf-%{version}%{?rcver}-py3.*-nspkg.pth
 %doc python/README.md
 %doc examples/add_person.py examples/list_people.py examples/addressbook.proto
 %endif
@@ -318,6 +318,12 @@ install -p -m 0644 %{SOURCE1} %{buildroot}%{_emacs_sitestartdir}
 %endif
 
 %changelog
+* Thu Mar 10 2022 wangxiaochao <wangxiaochao2@huawei.com> - 3.14.0-2
+- Type:buxfix
+- ID:NA
+- SUG:NA
+- DESC: fix mainline compile failed
+
 * Fri Jul 30 2021 liyanan <liyanan32@huawei.com> - 3.14.0-1
 - update to 3.14.0
 
