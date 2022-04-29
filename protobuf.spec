@@ -8,7 +8,7 @@
 Summary:        Protocol Buffers - Google's data interchange format
 Name:           protobuf
 Version:        3.14.0
-Release:        3
+Release:        4
 License:        BSD
 URL:            https://github.com/protocolbuffers/protobuf
 Source:         https://github.com/protocolbuffers/protobuf/releases/download/v%{version}%{?rcver}/%{name}-all-%{version}%{?rcver}.tar.gz
@@ -17,6 +17,8 @@ Source1:        protobuf-init.el
 Patch9000:      0001-add-secure-compile-option-in-Makefile.patch
 Patch9001:      0002-add-secure-compile-fs-check-in-Makefile.patch
 Patch9002:      0003-fix-CVE-2021-22570.patch
+Patch9003:      0004-Improve-performance-of-parsing-unknown-fields-in-Jav.patch
+
 BuildRequires:  make autoconf automake emacs gcc-c++ libtool pkgconfig zlib-devel
 
 %description
@@ -174,6 +176,8 @@ rm java/core/src/test/java/com/google/protobuf/BoundedByteStringTest.java
 rm java/core/src/test/java/com/google/protobuf/RopeByteStringTest.java
 rm java/core/src/test/java/com/google/protobuf/RopeByteStringSubstringTest.java
 rm java/core/src/test/java/com/google/protobuf/TextFormatTest.java
+rm java/core/src/test/java/com/google/protobuf/UnknownFieldSetTest.java
+rm java/core/src/test/java/com/google/protobuf/UnknownFieldSetPerformanceTest.java
 rm -r java/util/src/test/java/com/google/protobuf/util
 rm -r java/util/src/main/java/com/google/protobuf/util
 
@@ -319,14 +323,20 @@ install -p -m 0644 %{SOURCE1} %{buildroot}%{_emacs_sitestartdir}
 %endif
 
 %changelog
+* Wed Apr 27 2022 wangxiaochao <wangxiaochao2@huawei.com> - 3.14.0-4
+- Type:bugfix
+- ID:NA
+- SUG:NA
+- DESC: Improve performance of parsing unknown fields in Java
+
 * Fri Mar 18 2022 wangxiaochao <wangxiaochao2@huawei.com> - 3.14.0-3
-- Type:buxfix
+- Type:bugfix
 - ID:NA
 - SUG:NA
 - DESC: fix CVE-2021-22570
 
 * Thu Mar 10 2022 wangxiaochao <wangxiaochao2@huawei.com> - 3.14.0-2
-- Type:buxfix
+- Type:bugfix
 - ID:NA
 - SUG:NA
 - DESC: fix mainline compile failed
