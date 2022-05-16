@@ -8,7 +8,7 @@
 Summary:        Protocol Buffers - Google's data interchange format
 Name:           protobuf
 Version:        3.14.0
-Release:        4
+Release:        5
 License:        BSD
 URL:            https://github.com/protocolbuffers/protobuf
 Source:         https://github.com/protocolbuffers/protobuf/releases/download/v%{version}%{?rcver}/%{name}-all-%{version}%{?rcver}.tar.gz
@@ -189,7 +189,7 @@ rm -r java/util/src/main/java/com/google/protobuf/util
 
 # This test is incredibly slow on arm
 # https://github.com/protocolbuffers/protobuf/issues/2389
-%ifarch %{arm}
+%ifarch %{arm} riscv64
 mv java/core/src/test/java/com/google/protobuf/IsValidUtf8Test.java \
    java/core/src/test/java/com/google/protobuf/IsValidUtf8Test.java.slow
 mv java/core/src/test/java/com/google/protobuf/DecodeUtf8Test.java \
@@ -214,6 +214,9 @@ popd
 %endif
 
 %if %{with java}
+%ifarch riscv64
+export MAVEN_OPTS=-Xmx1024m
+%endif
 %mvn_build -s -- -f java/pom.xml
 %endif
 
@@ -323,6 +326,9 @@ install -p -m 0644 %{SOURCE1} %{buildroot}%{_emacs_sitestartdir}
 %endif
 
 %changelog
+* Mon May 16 2022 xiaoqianlv <xiaoqian@nj.iscas.ac.cn> - 3.14.0-5
+- set MAVEN_OPTS for riscv
+
 * Wed Apr 27 2022 wangxiaochao <wangxiaochao2@huawei.com> - 3.14.0-4
 - Type:bugfix
 - ID:NA
